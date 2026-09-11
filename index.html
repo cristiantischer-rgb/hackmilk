@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#2F6B2F">
+  <title>LeiteBov · Gestão, Serviços e Negócios</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="app-header">
+  <div class="header-row">
+    <div class="logo-area"><div class="logo-icon">🐄</div><div class="logo-text"><h1>LeiteBov</h1><span>gestão • serviços • negócios</span></div></div>
+    <div class="header-actions"><div class="fazenda-badge">🌿 Faz. São Pedro</div><button class="cart-mini" id="headerCartBtn">🛒 Carrinho <span class="cart-count" id="headerCartCount">0</span></button></div>
+  </div>
+</header>
+<div class="tabs-container">
+  <button class="tab-btn active" data-tab="zootecnico">🐄 Rebanho</button>
+  <button class="tab-btn" data-tab="financeiro">💰 Financeiro</button>
+  <button class="tab-btn" data-tab="benchmarking">📊 Comparar</button>
+  <button class="tab-btn" data-tab="servicos">🛠️ Serviços</button>
+  <button class="tab-btn" data-tab="loja">🛒 Loja</button>
+</div>
+<main>
+  <div class="tab-panel active" id="panel-zootecnico">
+    <div class="hero"><div><h2>A fazenda inteira em uma única plataforma.</h2><p>Acompanhe o rebanho, controle resultados e conecte a operação da propriedade a serviços e compras.</p></div><div class="hero-actions"><button class="btn btn-light btn-small" onclick="showTab('servicos')">🛠️ Contratar serviço</button><button class="btn btn-light btn-small" onclick="showTab('loja')">🛒 Comprar insumos</button></div></div>
+    <div class="flex-between mb-2"><div class="card-title">📋 Resumo hoje</div><button class="btn btn-small" id="fabLancarBtn">+ Lançar produção</button></div>
+    <div class="kpi-grid" id="kpiContainer"></div><div id="alertContainer"></div>
+    <div class="flex-between mb-2"><span class="card-title">🐄 Últimas produções</span><span class="text-small">clique para detalhes</span></div>
+    <div id="animalList" class="animais-container"></div>
+    <div class="card"><div class="card-title">🌾 Consumo médio (MS)</div><div class="table-wrapper"><table class="data-table"><thead><tr><th>Dieta</th><th>Animais</th><th>Consumo</th><th>Status</th></tr></thead><tbody><tr><td>Alta Produção</td><td>28</td><td>22,4 kg</td><td><span class="badge">OK</span></td></tr><tr><td>Média Produção</td><td>34</td><td>19,6 kg</td><td><span class="badge">OK</span></td></tr><tr><td>Secas</td><td>12</td><td>10,2 kg</td><td><span class="badge badge-warning">Revisar</span></td></tr></tbody></table></div></div>
+  </div>
+
+  <div class="tab-panel" id="panel-financeiro">
+    <div class="flex-between mb-2"><div class="card-title">💰 Fluxo de Caixa - Leite</div><button class="btn btn-small" id="btnAddTransacao">+ Registrar</button></div>
+    <div class="integration-banner"><div class="integration-icon">🔗</div><div><strong>Financeiro integrado ao marketplace</strong><div class="text-small">Compras na Loja e serviços contratados podem ser registrados automaticamente como despesas da propriedade.</div></div></div>
+    <div class="kpi-grid" id="finKpis"></div>
+    <div class="card"><div class="card-title">📈 Receitas vs Despesas (este mês)</div><div class="progress" style="height:12px"><div class="progress-fill" id="receitaProgress"></div></div><div class="flex-between text-small mt-2"><span>🟢 Receitas</span><span id="totalReceitasValor">R$ 0</span></div><div class="progress" style="height:12px"><div class="progress-fill" id="despesaProgress" style="background:#D9534F"></div></div><div class="flex-between text-small mt-2"><span>🔴 Despesas</span><span id="totalDespesasValor">R$ 0</span></div><div class="flex-between mt-3"><span class="card-title" style="margin:0">📊 Resultado</span><strong id="resultadoMes" style="font-size:20px">R$ 0</strong></div><div class="text-small" id="margemInfo"></div></div>
+    <div class="card"><div class="card-title">📋 Últimas transações</div><div class="table-wrapper"><table class="data-table"><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th>Valor</th><th></th></tr></thead><tbody id="transacoesBody"></tbody></table></div><button class="btn btn-outline btn-small mt-2" id="verTodasTransacoes" style="width:100%">Ver extrato completo</button></div>
+    <div class="card"><div class="card-title">🥛 Custo por litro (detalhado)</div><div class="flex-between"><span>Custo operacional total / mês</span><strong id="custoTotalOperacional">R$ 0</strong></div><div class="flex-between mt-2"><span>Produção total</span><strong id="producaoTotalLitros">0 L</strong></div><div class="progress mt-2"><div class="progress-fill" id="custoPorLitroBar" style="background:var(--ouro)"></div></div><div class="flex-between mt-2"><span>💵 <strong>Custo por litro</strong></span><strong id="custoPorLitroValor" style="font-size:18px">R$ 0,00</strong></div><div class="text-small mt-2">💰 Preço médio de venda: <span id="precoVendaMedio">R$ 2,47</span>/L → <span id="lucroPorLitro">R$ 0,00</span> de margem por litro</div></div>
+  </div>
+
+  <div class="tab-panel" id="panel-benchmarking">
+    <div class="card"><div class="flex-between"><div class="card-title">🏆 Posição regional</div><span class="badge" id="rankPosicao">4º lugar</span></div><div class="mt-2"><strong>Fazenda São Pedro</strong> · <span id="scoreGeral">87</span> pontos</div><div class="progress mt-2"><div class="progress-fill" id="progressScore" style="width:78%"></div></div><div class="flex-between text-small mt-2"><span>Média regional: 24,1 L/vaca</span><span>Sua meta: 32 L</span></div></div>
+    <div class="card"><div class="card-title">🥛 Comparativo produção</div><div class="table-wrapper"><table class="data-table" id="rankingTable"><thead><tr><th>Fazenda</th><th>L/vaca/dia</th><th>Rank</th></tr></thead><tbody></tbody></table></div></div>
+    <div class="card"><div class="card-title">💰 Custo por litro</div><div class="flex-between"><span>Seu custo: R$ <span id="custoLiteral">1,42</span>/L</span><span class="badge">Melhor que média R$ 1,64</span></div><div class="progress mt-2"><div class="progress-fill" id="custoProgress" style="width:68%;background:#4CAF50"></div></div></div>
+  </div>
+
+  <div class="tab-panel" id="panel-servicos">
+    <div class="hero"><div><h2>🛠️ Serviços para a fazenda, quando você precisa.</h2><p>Encontre profissionais especializados ou máquinas disponíveis na região, compare avaliações, preços e disponibilidade e solicite orçamento.</p></div><div class="hero-actions"><button class="btn btn-light btn-small" id="solicitarServicoBtn">+ Nova solicitação</button><button class="btn btn-outline btn-small" style="border-color:white;color:white" id="anunciarServicoBtn">Anunciar serviço</button></div></div>
+    <div class="segmented"><button class="seg-btn active" data-service-type="humanos">👨‍🌾 Profissionais</button><button class="seg-btn" data-service-type="maquinas">🚜 Máquinas</button><button class="seg-btn" data-service-type="solicitacoes">📆 Minhas solicitações</button></div>
+    <div id="serviceBrowseArea">
+      <div class="search-row"><div class="searchbox"><span>🔎</span><input id="serviceSearch" placeholder="Buscar veterinário, ensilagem, retroescavadeira..."></div><button class="btn btn-outline btn-small" id="nearbyOnlyBtn">📍 Até 50 km</button></div>
+      <div class="chips" id="serviceChips"></div><div class="market-grid" id="serviceGrid"></div>
+    </div>
+    <div id="serviceRequestsArea" style="display:none"><div class="card"><div class="card-title">📆 Solicitações e serviços contratados</div><div class="table-wrapper"><table class="data-table"><thead><tr><th>Data</th><th>Serviço</th><th>Prestador</th><th>Valor</th><th>Status</th><th></th></tr></thead><tbody id="visitasBody"></tbody></table></div></div></div>
+  </div>
+
+  <div class="tab-panel" id="panel-loja">
+    <div class="hero"><div><h2>🛒 Loja LeiteBov</h2><p>Produtos e insumos para a atividade leiteira em um único ambiente, com fornecedores regionais e integração direta com a gestão financeira.</p></div><div class="hero-actions"><button class="btn btn-light btn-small" id="openCartHero">Ver carrinho · <span id="heroCartCount">0</span></button></div></div>
+    <div class="integration-banner"><div class="integration-icon">💰</div><div><strong>Comprou? O financeiro já sabe.</strong><div class="text-small">No fechamento do pedido, o LeiteBov pode lançar automaticamente a compra na categoria correta do fluxo de caixa.</div></div></div>
+    <div class="search-row"><div class="searchbox"><span>🔎</span><input id="productSearch" placeholder="Buscar ração, medicamento, equipamento, sementes..."></div><select id="sortProducts"><option value="relevancia">Mais relevantes</option><option value="menor">Menor preço</option><option value="maior">Maior preço</option></select></div>
+    <div class="chips" id="productChips"></div><div class="product-grid" id="productGrid"></div>
+  </div>
+</main>
+
+<div class="bottom-nav">
+  <button class="nav-item active" data-mobile-tab="zootecnico"><span class="nav-icon">🐄</span><span>Rebanho</span></button>
+  <button class="nav-item" data-mobile-tab="financeiro"><span class="nav-icon">💰</span><span>Financeiro</span></button>
+  <button class="nav-item" data-mobile-tab="benchmarking"><span class="nav-icon">📊</span><span>Comparar</span></button>
+  <button class="nav-item" data-mobile-tab="servicos"><span class="nav-icon">🛠️</span><span>Serviços</span></button>
+  <button class="nav-item" data-mobile-tab="loja"><span class="nav-icon">🛒</span><span>Loja</span></button>
+</div>
+
+<div class="modal-mask" id="modalLancamento"><div class="modal-content"><div class="modal-handle"></div><div class="card-title">🥛 Lançar produção</div><div class="input-group"><label>Data</label><input type="date" id="lancData"></div><div class="input-group"><label>Animal</label><select id="lancAnimalSelect"></select></div><div class="input-group"><label>Litros (hoje)</label><input type="number" id="lancLitros" step="0.1" placeholder="Ex: 34,2"></div><div class="flex-between gap-2"><button class="btn btn-outline" style="flex:1" onclick="closeModal('modalLancamento')">Cancelar</button><button class="btn" style="flex:1" id="confirmarLancamento">Salvar</button></div></div></div>
+<div class="modal-mask" id="modalTransacao"><div class="modal-content"><div class="modal-handle"></div><div class="card-title">💰 Registrar movimentação</div><div class="input-group"><label>Tipo</label><select id="tipoTransacao"><option value="receita">Receita</option><option value="despesa">Despesa</option></select></div><div class="input-group"><label>Data</label><input type="date" id="transacaoData"></div><div class="input-group"><label>Descrição</label><input id="transacaoDesc" placeholder="Ex: Venda de leite, Ração"></div><div class="input-group"><label>Categoria</label><select id="transacaoCategoria"><option>Venda de Leite</option><option>Alimentação</option><option>Sanidade</option><option>Reprodução</option><option>Máquinas e Serviços</option><option>Mão de obra</option><option>Energia</option><option>Equipamentos</option><option>Compras / Insumos</option><option>Outros</option></select></div><div class="input-group"><label>Valor (R$)</label><input type="number" id="transacaoValor" step="0.01"></div><div class="flex-between gap-2"><button class="btn btn-outline" style="flex:1" onclick="closeModal('modalTransacao')">Cancelar</button><button class="btn" style="flex:1" id="confirmarTransacao">Registrar</button></div></div></div>
+<div class="modal-mask" id="modalAnimalDetail"><div class="modal-content"><div class="modal-handle"></div><div id="modalAnimalInner"></div><button class="btn btn-outline btn-block mt-2" onclick="closeModal('modalAnimalDetail')">Fechar</button></div></div>
+<div class="modal-mask" id="modalSolicitar"><div class="modal-content"><div class="modal-handle"></div><div class="card-title">📋 Solicitar serviço</div><div id="selectedServiceSummary" class="alert-line" style="display:none"></div><div class="two-col"><div class="input-group"><label>Tipo</label><select id="servicoTipo"><option value="Profissional">Serviço profissional</option><option value="Máquina">Máquina / operação mecanizada</option></select></div><div class="input-group"><label>Data desejada</label><input type="date" id="servicoData"></div></div><div class="input-group"><label>Serviço</label><input id="servicoNome" placeholder="Ex: Veterinário, ensilagem de milho"></div><div class="two-col"><div class="input-group"><label>Quantidade</label><input id="servicoQuantidade" placeholder="Ex: 25"></div><div class="input-group"><label>Unidade</label><select id="servicoUnidade"><option>hectares</option><option>horas</option><option>diária</option><option>visita</option><option>cabeças</option></select></div></div><div class="input-group"><label>Observação</label><textarea id="servicoObs" rows="3" placeholder="Descreva o serviço e condições da propriedade"></textarea></div><div class="flex-between gap-2"><button class="btn btn-outline" style="flex:1" onclick="closeModal('modalSolicitar')">Cancelar</button><button class="btn" style="flex:1" id="confirmarSolicitacao">Solicitar orçamento</button></div></div></div>
+<div class="modal-mask" id="modalServiceDetail"><div class="modal-content"><div class="modal-handle"></div><div id="serviceDetailInner"></div></div></div>
+<div class="modal-mask" id="modalProvider"><div class="modal-content"><div class="modal-handle"></div><div class="card-title">📣 Anunciar serviço no LeiteBov</div><div class="input-group"><label>Você deseja anunciar</label><select><option>Serviço profissional</option><option>Máquina / operação mecanizada</option></select></div><div class="input-group"><label>Nome / Empresa</label><input placeholder="Nome do prestador"></div><div class="input-group"><label>Serviço oferecido</label><input placeholder="Ex: Ensilagem, casqueamento, assistência veterinária"></div><div class="two-col"><div class="input-group"><label>Valor base</label><input placeholder="R$"></div><div class="input-group"><label>Raio de atendimento</label><input placeholder="Ex: 50 km"></div></div><button class="btn btn-block" onclick="toast('Cadastro de prestador enviado para análise');closeModal('modalProvider')">Enviar cadastro</button></div></div>
+<div class="modal-mask" id="modalCart"><div class="modal-content"><div class="modal-handle"></div><div class="flex-between"><div class="card-title">🛒 Seu carrinho</div><span class="badge" id="cartItemsBadge">0 itens</span></div><div id="cartItems"></div><div id="cartFooter"><div class="flex-between mt-3"><span>Total</span><span class="cart-total" id="cartTotal">R$ 0,00</span></div><div class="input-group mt-3"><label>Entrega</label><select id="deliveryOption"><option>Entrega na propriedade</option><option>Retirada no fornecedor</option></select></div><label style="display:flex;align-items:center;gap:8px;margin:12px 0"><input type="checkbox" id="addOrderFinance" checked style="width:auto"> Lançar pedido automaticamente no Financeiro</label><button class="btn btn-block" id="checkoutBtn">Finalizar pedido de demonstração</button></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="app-data.js"></script>
+<script src="app-render.js"></script>
+<script src="app-events.js"></script>
+</body>
+</html>
