@@ -10,3 +10,8 @@
   $('headerCartBtn').addEventListener('click',openCart);$('openCartHero').addEventListener('click',openCart);$('checkoutBtn').addEventListener('click',()=>{const total=cartTotal();if(!total)return;const integrar=$('addOrderFinance').checked;if(integrar)adicionarTransacao('despesa',today(),'Pedido Loja LeiteBov','Compras / Insumos',total);cart=[];salvarTudo();renderCart();renderCartCounts();closeModal('modalCart');toast(integrar?'Pedido concluído e lançado no Financeiro':'Pedido de demonstração concluído')});
 
   carregarDados();$('lancData').value=today();$('servicoData').value=today();renderizarTudo();
+
+  const aiLoader=document.createElement('script');
+  aiLoader.src='assistant.js';
+  aiLoader.defer=true;
+  document.body.appendChild(aiLoader);
