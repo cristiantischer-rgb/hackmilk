@@ -12,6 +12,6 @@
   carregarDados();$('lancData').value=today();$('servicoData').value=today();renderizarTudo();
 
   const aiLoader=document.createElement('script');
-  aiLoader.src='assistant.js';
+  aiLoader.src='assistant.js?v=20260911-1310';
   aiLoader.defer=true;
   document.body.appendChild(aiLoader);
